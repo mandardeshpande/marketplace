@@ -4,6 +4,7 @@ import com.marketplace.bidding.marketplace.Services.BuyerService;
 import com.marketplace.bidding.marketplace.Services.SellerService;
 import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Seller;
+import com.marketplace.bidding.marketplace.models.User;
 import com.marketplace.bidding.marketplace.repository.BuyerRepository;
 import com.marketplace.bidding.marketplace.repository.SellerRepository;
 import java.util.ArrayList;
@@ -52,9 +53,14 @@ public class BuyerServiceImpl implements BuyerService {
     return  sellerList;
   }
 
-  @Override
-  public Buyer findByBuyerUser_Id(Long buyerUserId){
-    return buyerRepository.findByBuyerUser_Id(buyerUserId);
-  }
+//  @Override
+//  public Buyer findByBuyerUser(User buyer){
+//    return buyerRepository.findBuyerByBuyerUser(buyer);
+//  }
+//
+//  @Override
+//  public Buyer findBuyerById(Long id){
+//    return buyerRepository.findBuyerByBuyerUser_id(id);
+//  }
 
 }

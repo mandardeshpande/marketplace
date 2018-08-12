@@ -6,5 +6,6 @@ import com.marketplace.bidding.marketplace.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface BuyerRepository extends CrudRepository<Buyer, Long> {
-  Buyer findByBuyerUser_Id(Long buyerId);
+//  Buyer findBuyerByBuyerUser(User buyer);
+//  Buyer findBuyerByBuyerUser_id(Long id);
 }

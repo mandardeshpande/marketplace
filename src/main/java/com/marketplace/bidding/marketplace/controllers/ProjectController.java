@@ -50,8 +50,7 @@ public class ProjectController {
   @RequestMapping(value = "/post/{sellerId}", method = RequestMethod.POST)
   public ResponseEntity<Project> postNewProject(@PathVariable("sellerId") Long sellerId,@RequestBody Project project) {
     try {
-      User sellerUser = userService.getById(sellerId);
-      Seller seller = sellerService.getById(sellerUser.getId());
+      Seller seller = sellerService.getById(sellerId);
 
       if(seller == null){
         return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);

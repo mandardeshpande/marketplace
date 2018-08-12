@@ -54,7 +54,8 @@ public class BidController {
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public ResponseEntity<Bid> addNewBid(@RequestBody BidRequest bidRequest) {
     try {
-      Buyer buyer = buyerService.findByBuyerUser_Id(Long.parseLong(bidRequest.getBiddingUser()));
+
+      Buyer buyer = buyerService.getById(Long.parseLong(bidRequest.getBiddingUser()));
       Project project = projectService.getById(Long.parseLong(bidRequest.getProjectId()));
 
       Bid bid = new Bid();

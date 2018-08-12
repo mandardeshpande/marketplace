@@ -26,8 +26,15 @@ public class Seller {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
-  @ManyToOne
-  @JoinColumn(name = "sellerId")
-  private User sellerUser;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private String password;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "CREATED_DATE", updatable = false)
+  private Date joiningDate;
+
+  private int userRating;
 
 }
