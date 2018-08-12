@@ -3,10 +3,13 @@ package com.marketplace.bidding.marketplace.controllers;
 
 import com.marketplace.bidding.marketplace.Services.BidService;
 import com.marketplace.bidding.marketplace.Services.Impl.ProjectServiceImpl;
+import com.marketplace.bidding.marketplace.Services.Impl.SellerServiceImpl;
+import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
 import com.marketplace.bidding.marketplace.models.Bid;
 import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.models.User;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,25 +28,34 @@ public class ProjectController {
   @Autowired
   ProjectServiceImpl projectService;
 
-//  @RequestMapping(value = "/{sellerId}", method = RequestMethod.GET)
-//  public ResponseEntity<Bid> getBidById(@PathVariable("sellerId") String bidId) {
-//    try {
-//      projectService.getById()
-//      return new ResponseEntity<Bid>(HttpStatus.OK);
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//      return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//  }
+  @Autowired
+  UserServiceImpl userService;
+
+
+  @Autowired
+  SellerServiceImpl sellerService;
+
+
+  @RequestMapping(value = "/{sellerId}", method = RequestMethod.GET)
+  public ResponseEntity<List<Project>> getBidById(@PathVariable("sellerId") Long sellerId) {
+    try {
+      List<Project> projectBySellerId = projectService.findBySeller(sellerService.getById(sellerId));
+      return new ResponseEntity<List<Project>>(projectBySellerId, HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<List<Project>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   @RequestMapping(value = "/post/{sellerId}", method = RequestMethod.POST)
   public ResponseEntity<Project> postNewProject(@PathVariable("sellerId") Long sellerId,@RequestBody Project project) {
     try {
-      User sellerUser = new User();
-      sellerUser.setId(sellerId);
+      User sellerUser = userService.getById(sellerId);
+      Seller seller = sellerService.getById(sellerUser.getId());
 
-      Seller seller = new Seller();
-      seller.setUser(sellerUser);
+      if(seller == null){
+        return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+      }
 
       project.setSeller(seller);
       Project newProject = projectService.addNewProject(project);

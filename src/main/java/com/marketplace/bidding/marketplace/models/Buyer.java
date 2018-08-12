@@ -2,6 +2,7 @@ package com.marketplace.bidding.marketplace.models;
 
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,17 +27,9 @@ public class Buyer {
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long Id;
 
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String password;
-
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CREATED_DATE", updatable = false)
-  private Date joiningDate;
-
-  private int userRating;
-
+  @ManyToOne
+  @JoinColumn(name = "buyerId")
+  private User buyerUser;
 
   private String workStructure; //hourly or fixed price
 

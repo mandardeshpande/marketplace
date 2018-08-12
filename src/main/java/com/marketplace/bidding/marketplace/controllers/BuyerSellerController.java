@@ -7,6 +7,7 @@ import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.models.User;
 import com.marketplace.bidding.marketplace.models.WorkType;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,8 +42,14 @@ public class BuyerSellerController {
         User sellerUser = new User();
         sellerUser.setId(Long.parseLong(userId));
 
+        //List<User> sellerList = new ArrayList<>();
+        //sellerList.add(sellerUser);
+
+        seller.setSellerUser(sellerUser);
+
         sellerService.addSeller(seller);
       } else {
+
         Buyer buyer = new Buyer();
         buyer.setFixedRate(work.getFixedRate());
         buyer.setHourlyRate(work.getHourlyRate());
@@ -50,6 +57,10 @@ public class BuyerSellerController {
         User buyerUser = new User();
         buyerUser.setId(Long.parseLong(userId));
 
+        //List<User> buyerList = new ArrayList<>();
+        //buyerList.add(buyerUser);
+
+        buyer.setBuyerUser(buyerUser);
         buyerService.registerBuyer(buyer);
       }
 

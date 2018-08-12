@@ -3,6 +3,7 @@ package com.marketplace.bidding.marketplace.controllers;
 import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
 
 import com.marketplace.bidding.marketplace.models.User;
+import java.util.Date;
 import java.util.List;
 import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class UserController {
   @RequestMapping(path = "/add", method = RequestMethod.POST)
   public ResponseEntity<Long> addNewUser(@RequestBody User user) {
     try {
+      user.setJoiningDate(new Date());
       User newUser = userService.addNewUser(user);
       return new ResponseEntity<Long>(newUser.getId(),HttpStatus.CREATED);
     } catch (Exception e) {

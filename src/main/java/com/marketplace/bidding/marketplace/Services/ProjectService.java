@@ -1,6 +1,8 @@
 package com.marketplace.bidding.marketplace.Services;
 
 import com.marketplace.bidding.marketplace.models.Project;
+import com.marketplace.bidding.marketplace.models.Seller;
+import java.util.List;
 
 public interface ProjectService {
 
@@ -11,4 +13,6 @@ public interface ProjectService {
   Project updateProject(Long id, Project project)throws Exception;
 
   Project deleteProject(Long id)throws Exception;
+
+  List<Project> findBySeller(Seller sellerId) throws Exception;
 }

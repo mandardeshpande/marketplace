@@ -2,6 +2,7 @@ package com.marketplace.bidding.marketplace.models;
 
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,19 +23,11 @@ import lombok.ToString;
 public class Seller {
 
   @Id
-  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String password;
-
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CREATED_DATE", updatable = false)
-  private Date joiningDate;
-
-  private int userRating;
-
+  @ManyToOne
+  @JoinColumn(name = "sellerId")
+  private User sellerUser;
 
 }

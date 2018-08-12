@@ -3,7 +3,10 @@ package com.marketplace.bidding.marketplace.Services.Impl;
 
 import com.marketplace.bidding.marketplace.Services.ProjectService;
 import com.marketplace.bidding.marketplace.models.Project;
+import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.repository.ProjectRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +42,12 @@ public class ProjectServiceImpl implements ProjectService {
       return u;
     }
     throw new RuntimeException("No such Auction exists with Auction id -> "+id);
+  }
+
+  @Override
+  public List<Project> findBySeller(Seller sellerId){
+    List<Project> projectList = new ArrayList<>();
+    projectRepository.findBySeller(sellerId).forEach(e->projectList.add(e));
+    return projectList;
   }
 }

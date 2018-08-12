@@ -27,7 +27,7 @@ public class Project {
   private String title;
   private String description;
 
-  @OneToMany
+  @ManyToOne
   @JoinColumn(name = "project_seller_id")
   private Seller seller;
 
