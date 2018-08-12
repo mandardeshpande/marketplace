@@ -16,5 +16,7 @@ public interface BuyerService {
 
     List<Buyer> getAllBuyer() throws Exception;
 
+    Buyer findByBuyerUser_Id(Long buyerId) throws Exception;
+
   }
 

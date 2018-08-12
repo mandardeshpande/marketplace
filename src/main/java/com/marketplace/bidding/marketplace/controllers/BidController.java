@@ -2,7 +2,15 @@ package com.marketplace.bidding.marketplace.controllers;
 
 
 import com.marketplace.bidding.marketplace.Services.BidService;
+import com.marketplace.bidding.marketplace.Services.Impl.BuyerServiceImpl;
+import com.marketplace.bidding.marketplace.Services.Impl.ProjectServiceImpl;
+import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
 import com.marketplace.bidding.marketplace.models.Bid;
+import com.marketplace.bidding.marketplace.models.BidRequest;
+import com.marketplace.bidding.marketplace.models.Buyer;
+import com.marketplace.bidding.marketplace.models.Project;
+import com.marketplace.bidding.marketplace.models.User;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.ws.Response;
@@ -23,6 +31,15 @@ public class BidController {
   @Autowired
   BidService bidService;
 
+  @Autowired
+  UserServiceImpl userService;
+
+  @Autowired
+  BuyerServiceImpl buyerService;
+
+  @Autowired
+  ProjectServiceImpl projectService;
+
   @RequestMapping(value = "/{bidId}", method = RequestMethod.GET)
   public ResponseEntity<Bid> getBidById(@PathVariable("bidId") String bidId) {
     try {
@@ -35,10 +52,20 @@ public class BidController {
   }
 
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public ResponseEntity<Bid> addNewBid(@RequestBody Bid bid) {
+  public ResponseEntity<Bid> addNewBid(@RequestBody BidRequest bidRequest) {
     try {
-      bidService.addNewBid(bid);
-      return new ResponseEntity<Bid>(HttpStatus.OK);
+      Buyer buyer = buyerService.findByBuyerUser_Id(Long.parseLong(bidRequest.getBiddingUser()));
+      Project project = projectService.getById(Long.parseLong(bidRequest.getProjectId()));
+
+      Bid bid = new Bid();
+
+      bid.setBidTime(new Date());
+      bid.setStartingAmount(Double.parseDouble(bidRequest.getBidAmount()));
+      bid.setBuyer(buyer);
+      bid.setProject(project);
+
+      Bid newPostedBid = bidService.addNewBid(bid);
+      return new ResponseEntity<Bid>(newPostedBid,HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

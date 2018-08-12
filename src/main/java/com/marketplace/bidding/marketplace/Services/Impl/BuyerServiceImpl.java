@@ -52,4 +52,9 @@ public class BuyerServiceImpl implements BuyerService {
     return  sellerList;
   }
 
+  @Override
+  public Buyer findByBuyerUser_Id(Long buyerUserId){
+    return buyerRepository.findByBuyerUser_Id(buyerUserId);
+  }
+
 }
