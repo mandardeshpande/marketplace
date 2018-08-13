@@ -97,8 +97,8 @@ public class BidController {
   @RequestMapping(value = "/winning", method = RequestMethod.GET)
   public ResponseEntity<?> getWinning() {
     try {
-      Bid p = bidService.getWinningBid();
-      return new ResponseEntity<Bid>(HttpStatus.OK);
+      List<Project> p = bidService.getWinningBid();
+      return new ResponseEntity<List<Project>>(p, HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

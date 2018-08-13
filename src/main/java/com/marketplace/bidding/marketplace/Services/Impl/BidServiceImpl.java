@@ -5,8 +5,14 @@ import com.marketplace.bidding.marketplace.Services.BidService;
 import com.marketplace.bidding.marketplace.models.Bid;
 import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.repository.BidRepository;
+import com.marketplace.bidding.marketplace.repository.ProjectRepository;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +21,9 @@ public class BidServiceImpl implements BidService {
 
   @Autowired
   BidRepository BidRepository;
+
+  @Autowired
+  ProjectServiceImpl projectService;
 
 
   @Override
@@ -52,8 +61,29 @@ public class BidServiceImpl implements BidService {
   }
 
   @Override
-  public Bid getWinningBid() throws Exception {
-      return BidRepository.getWinningBid();
+  public List<Project> getWinningBid() throws Exception {
+
+    List<Project> projectListBeforeBidDeadline = projectService.findAllProjectBeforeBidEndTime();
+
+    Iterator<Bid> sourceIterator = BidRepository.findAll().iterator();
+    Iterable<Bid> iterable = () -> sourceIterator;
+
+
+    Bid bidWithMinimumAmount = StreamSupport
+        .stream(iterable.spliterator(),false)
+        .min(Comparator.comparing(i ->i.getAmount()))
+        .get();
+
+    List<Project> p = projectListBeforeBidDeadline
+        .stream()
+        .filter( project-> bidWithMinimumAmount.getProject().getId().equals(project.getId()))
+        .collect(Collectors.toList());
+
+    return p;
+
+
+
+
   }
 
 
