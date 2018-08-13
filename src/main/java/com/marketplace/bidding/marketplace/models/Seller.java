@@ -32,7 +32,7 @@ public class Seller {
   private String password;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CREATED_DATE", updatable = false)
+  @Column(name = "joining_date", updatable = false)
   private Date joiningDate;
 
   private int userRating;

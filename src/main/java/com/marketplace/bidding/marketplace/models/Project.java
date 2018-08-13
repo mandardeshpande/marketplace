@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,8 +33,13 @@ public class Project {
   @JoinColumn(name = "project_seller_id")
   private Seller seller;
 
+  @Temporal(TemporalType.DATE)
   private Date biddingStartTime;
+
+  @Temporal(TemporalType.DATE)
   private Date biddingEndTime;
+
+  @Temporal(TemporalType.DATE)
   private Date projectDeliveryDate;
 
 }

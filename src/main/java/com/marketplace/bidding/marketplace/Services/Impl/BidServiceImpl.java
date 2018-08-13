@@ -3,6 +3,7 @@ package com.marketplace.bidding.marketplace.Services.Impl;
 
 import com.marketplace.bidding.marketplace.Services.BidService;
 import com.marketplace.bidding.marketplace.models.Bid;
+import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.repository.BidRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class BidServiceImpl implements BidService {
 
   @Override
   public Bid getWinningBid() throws Exception {
-      return new Bid();
+      return BidRepository.getWinningBid();
   }
 
 

@@ -6,7 +6,11 @@ import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.repository.ProjectRepository;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,8 +57,11 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Override
   public List<Project> findAllProjectBeforeBidEndTime(){
-    List<Project> projectList = new ArrayList<>();
-    projectRepository.findProjectByBiddingEndTime().forEach(e->projectList.add(e));
-    return projectList;
+    Date currentDate = new Date(System.currentTimeMillis());
+    Iterator<Project> sourceIterator = projectRepository.findAll().iterator();
+    Iterable<Project> iterable = () -> sourceIterator;
+    return StreamSupport.stream(iterable.spliterator(),false)
+        .filter(project-> project.getBiddingEndTime().before(currentDate))
+        .collect(Collectors.toList());
   }
 }

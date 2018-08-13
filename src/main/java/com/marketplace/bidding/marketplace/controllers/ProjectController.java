@@ -63,8 +63,8 @@ public class ProjectController {
     }
   }
 
-  @RequestMapping(value = "/all/beforeendTime", method = RequestMethod.GET)
-  public ResponseEntity<List<Project>> getAllAuctions() {
+  @RequestMapping(value = "/all/beforebidendtime", method = RequestMethod.GET)
+  public ResponseEntity<List<Project>> getAllProjectsBeforeBiddingDeadline() {
     try {
       List<Project> projectBeforeBiddingEnds = projectService.findAllProjectBeforeBidEndTime();
       return new ResponseEntity(projectBeforeBiddingEnds,HttpStatus.OK);
@@ -72,17 +72,5 @@ public class ProjectController {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-//
-//
-//  @RequestMapping(value = "/{bidId}", method = RequestMethod.PUT)
-//  public ResponseEntity<?> updateAuction(@PathVariable("bidId") Long bidId,
-//      @RequestBody Bid bid) {
-//    try {
-//      bidService.updateBid(bidId, bid);
-//      return new ResponseEntity<Bid>(HttpStatus.OK);
-//    } catch (Exception e) {
-//      return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//  }
 
 }
