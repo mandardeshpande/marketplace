@@ -31,7 +31,6 @@ public class ProjectController {
   @Autowired
   UserServiceImpl userService;
 
-
   @Autowired
   SellerServiceImpl sellerService;
 
@@ -40,10 +39,10 @@ public class ProjectController {
   public ResponseEntity<List<Project>> getBidById(@PathVariable("sellerId") Long sellerId) {
     try {
       List<Project> projectBySellerId = projectService.findBySeller(sellerService.getById(sellerId));
-      return new ResponseEntity<List<Project>>(projectBySellerId, HttpStatus.OK);
+      return new ResponseEntity(projectBySellerId, HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
-      return new ResponseEntity<List<Project>>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -53,26 +52,26 @@ public class ProjectController {
       Seller seller = sellerService.getById(sellerId);
 
       if(seller == null){
-        return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
       }
 
       project.setSeller(seller);
       Project newProject = projectService.addNewProject(project);
-      return new ResponseEntity<Project>(newProject, HttpStatus.OK);
+      return new ResponseEntity(newProject, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-//  @RequestMapping(value = "/all", method = RequestMethod.GET)
-//  public ResponseEntity<List<Bid>> getAllAuctions() {
-//    try {
-//      bidService.getAllActive();
-//      return new ResponseEntity<List<Bid>>(HttpStatus.OK);
-//    } catch (Exception e) {
-//      return new ResponseEntity<List<Bid>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//  }
+  @RequestMapping(value = "/all/beforeendTime", method = RequestMethod.GET)
+  public ResponseEntity<List<Project>> getAllAuctions() {
+    try {
+      List<Project> projectBeforeBiddingEnds = projectService.findAllProjectBeforeBidEndTime();
+      return new ResponseEntity(projectBeforeBiddingEnds,HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 //
 //
 //  @RequestMapping(value = "/{bidId}", method = RequestMethod.PUT)

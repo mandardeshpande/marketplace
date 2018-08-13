@@ -15,4 +15,6 @@ public interface BidService {
   Bid updateBid(Long id, Bid auction)throws Exception;
 
   Bid deleteBid(Long id)throws Exception;
+
+  Bid getWinningBid() throws Exception;
 }

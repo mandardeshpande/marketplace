@@ -49,4 +49,11 @@ public class BidServiceImpl implements BidService {
     BidRepository.findAll().forEach(e -> bidList.add(e));
     return bidList;
   }
+
+  @Override
+  public Bid getWinningBid() throws Exception {
+      return new Bid();
+  }
+
+
 }

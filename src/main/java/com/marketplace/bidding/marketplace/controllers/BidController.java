@@ -61,7 +61,7 @@ public class BidController {
       Bid bid = new Bid();
 
       bid.setBidTime(new Date());
-      bid.setStartingAmount(Double.parseDouble(bidRequest.getBidAmount()));
+      bid.setAmount(Double.parseDouble(bidRequest.getBidAmount()));
       bid.setBuyer(buyer);
       bid.setProject(project);
 
@@ -93,5 +93,15 @@ public class BidController {
       return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+//  @RequestMapping(value = "/winning", method = RequestMethod.GET)
+//  public ResponseEntity<?> getWinning() {
+//    try {
+//      bidService.winningBid();
+//      return new ResponseEntity<Bid>(HttpStatus.OK);
+//    } catch (Exception e) {
+//      return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//  }
 
 }

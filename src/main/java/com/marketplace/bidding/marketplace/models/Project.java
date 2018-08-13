@@ -32,6 +32,7 @@ public class Project {
   private Seller seller;
 
   private Date biddingStartTime;
+  private Date biddingEndTime;
   private Date projectDeliveryDate;
 
 }

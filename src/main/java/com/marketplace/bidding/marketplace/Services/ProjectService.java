@@ -15,4 +15,6 @@ public interface ProjectService {
   Project deleteProject(Long id)throws Exception;
 
   List<Project> findBySeller(Seller sellerId) throws Exception;
+
+  List<Project> findAllProjectBeforeBidEndTime() throws Exception;
 }

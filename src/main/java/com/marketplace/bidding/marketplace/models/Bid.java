@@ -34,6 +34,6 @@ public class Bid {
   @JoinColumn(name = "buyer_user_id")
   private Buyer buyer;
 
-  private Double startingAmount;
+  private Double amount;
 
 }

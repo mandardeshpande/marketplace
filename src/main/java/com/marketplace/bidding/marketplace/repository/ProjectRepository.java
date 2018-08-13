@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjectRepository extends CrudRepository<Project,Long> {
   List<Project> findBySeller(Seller seller);
+
+  List<Project> findProjectByBiddingEndTime();
 }

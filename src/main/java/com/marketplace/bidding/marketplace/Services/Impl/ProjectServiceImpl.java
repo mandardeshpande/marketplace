@@ -50,4 +50,11 @@ public class ProjectServiceImpl implements ProjectService {
     projectRepository.findBySeller(sellerId).forEach(e->projectList.add(e));
     return projectList;
   }
+
+  @Override
+  public List<Project> findAllProjectBeforeBidEndTime(){
+    List<Project> projectList = new ArrayList<>();
+    projectRepository.findProjectByBiddingEndTime().forEach(e->projectList.add(e));
+    return projectList;
+  }
 }
