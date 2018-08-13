@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,9 +27,13 @@ public class Seller {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
 
+  @NotNull
   private String firstName;
+  @NotNull
   private String lastName;
+  @NotNull
   private String email;
+  @NotNull
   private String password;
 
   @Temporal(TemporalType.TIMESTAMP)

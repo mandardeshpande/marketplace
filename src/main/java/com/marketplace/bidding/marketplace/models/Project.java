@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,20 +27,25 @@ public class Project {
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long id;
 
+  @NotNull
   private String title;
+  @NotNull
   private String description;
 
   @ManyToOne
   @JoinColumn(name = "project_seller_id")
   private Seller seller;
 
-  @Temporal(TemporalType.DATE)
+  @NotNull
+  @Temporal(TemporalType.TIMESTAMP)
   private Date biddingStartTime;
 
-  @Temporal(TemporalType.DATE)
+  @NotNull
+  @Temporal(TemporalType.TIMESTAMP)
   private Date biddingEndTime;
 
-  @Temporal(TemporalType.DATE)
+  @NotNull
+  @Temporal(TemporalType.TIMESTAMP)
   private Date projectDeliveryDate;
 
 }

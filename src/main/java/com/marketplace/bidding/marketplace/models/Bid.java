@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,17 +28,21 @@ public class Bid {
   @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Long Id;
 
+  @NotNull
   @Temporal(TemporalType.TIMESTAMP)
   private Date bidTime;
 
+  @NotNull
   @ManyToOne
   @JoinColumn(name = "project_id")
   private Project project;
 
+  @NotNull
   @ManyToOne
   @JoinColumn(name = "buyer_user_id")
   private Buyer buyer;
 
+  @NotNull
   private Double amount;
 
 }
