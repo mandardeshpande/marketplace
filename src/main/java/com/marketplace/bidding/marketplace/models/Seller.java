@@ -25,7 +25,7 @@ public class Seller {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   @NotNull
   private String firstName;

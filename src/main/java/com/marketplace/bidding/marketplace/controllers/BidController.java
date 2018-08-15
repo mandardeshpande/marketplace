@@ -7,12 +7,14 @@ import com.marketplace.bidding.marketplace.Services.Impl.ProjectServiceImpl;
 import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
 import com.marketplace.bidding.marketplace.models.Bid;
 import com.marketplace.bidding.marketplace.models.BidRequest;
+import com.marketplace.bidding.marketplace.models.BidResponse;
 import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.models.User;
 import java.util.Date;
 import java.util.List;
 
+import java.util.stream.Collectors;
 import javax.xml.ws.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,7 +75,7 @@ public class BidController {
   }
 
   @RequestMapping(value = "/all", method = RequestMethod.GET)
-  public ResponseEntity<List<Bid>> getAllAuctions() {
+  public ResponseEntity<List<Bid>> getAllBids() {
     try {
       bidService.getAllActive();
       return new ResponseEntity<List<Bid>>(HttpStatus.OK);
@@ -104,4 +106,22 @@ public class BidController {
     }
   }
 
+  @RequestMapping(value = "/project/{sellerId}", method = RequestMethod.GET)
+  public ResponseEntity<?> getAllBidsForProjectId( @PathVariable("sellerId") Long projectSellerId) {
+    try {
+      List<BidResponse> p = bidService.getAllBidsForProjectId(projectSellerId).stream().map(eachBid->{
+        BidResponse response = new BidResponse();
+        response.setBidAmount(eachBid.getAmount());
+        response.setBidderFirstName(eachBid.getBuyer().getFirstName());
+        response.setBidTime(eachBid.getBidTime());
+        response.setProjectTitle(eachBid.getProject().getTitle());
+        response.setProjectDescription(eachBid.getProject().getDescription());
+
+        return response;
+      }).collect(Collectors.toList());
+      return new ResponseEntity<List<BidResponse>>(p, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<BidResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

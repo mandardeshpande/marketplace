@@ -81,10 +81,18 @@ public class BidServiceImpl implements BidService {
 
     return p;
 
+  }
 
+  @Override
+  public List<Bid> getAllBidsForProjectId(Long projectSellerId) throws Exception {
 
+    List<Bid> bids = BidRepository.findBidsByProject_Seller_Id(projectSellerId);
+
+    return bids;
 
   }
+
+
 
 
 }

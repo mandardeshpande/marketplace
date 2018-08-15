@@ -17,4 +17,8 @@ public interface BidService {
   Bid deleteBid(Long id)throws Exception;
 
   List<Project> getWinningBid() throws Exception;
+
+  List<Bid> getAllBidsForProjectId(Long projectSellerId) throws Exception;
+
+
 }
