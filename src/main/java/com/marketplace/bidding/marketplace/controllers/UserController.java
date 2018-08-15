@@ -1,23 +1,17 @@
 package com.marketplace.bidding.marketplace.controllers;
 
 import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
-
 import com.marketplace.bidding.marketplace.models.User;
 import java.util.Date;
 import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
-
 
 
 @Controller
@@ -28,6 +22,8 @@ public class UserController {
   @Autowired
   private UserServiceImpl userService;
 
+
+
   @RequestMapping(path = "/add", method = RequestMethod.POST)
   public ResponseEntity<Long> addNewUser(@RequestBody User user) {
     try {
@@ -37,7 +33,6 @@ public class UserController {
     } catch (Exception e) {
       e.printStackTrace();
       return new ResponseEntity<Long>( HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
   }
 

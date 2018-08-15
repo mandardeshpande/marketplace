@@ -53,14 +53,11 @@ public class BuyerServiceImpl implements BuyerService {
     return  sellerList;
   }
 
-//  @Override
-//  public Buyer findByBuyerUser(User buyer){
-//    return buyerRepository.findBuyerByBuyerUser(buyer);
-//  }
-//
-//  @Override
-//  public Buyer findBuyerById(Long id){
-//    return buyerRepository.findBuyerByBuyerUser_id(id);
-//  }
+  @Override
+  public Buyer findBuyerByEmailAndAndPassword(String email, String password){
+    return buyerRepository.findBuyerByEmailAndAndPassword(email, password);
+  }
+
+
 
 }
