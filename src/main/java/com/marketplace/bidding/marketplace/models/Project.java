@@ -25,7 +25,7 @@ public class Project {
 
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   @NotNull
   private String title;
@@ -47,5 +47,9 @@ public class Project {
   @NotNull
   @Temporal(TemporalType.TIMESTAMP)
   private Date projectDeliveryDate;
+
+  @NotNull
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date projectPostedDate;
 
 }

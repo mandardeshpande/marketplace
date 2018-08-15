@@ -65,45 +65,17 @@ public class BidServiceImpl implements BidService {
   }
 
   @Override
-  public List<Project> getWinningProjectByLowBidAmount() throws Exception {
+  public List<Bid> getWinningProjectByLowBidAmount() throws Exception {
 
-    List<Project> projectListBeforeBidDeadline = projectService.findAllProjectBeforeBidEndTime();
-
-    Iterator<Bid> sourceIterator = BidRepository.findAll().iterator();
-    Iterable<Bid> iterable = () -> sourceIterator;
-
-    Bid bidWithMinimumAmount = StreamSupport
-        .stream(iterable.spliterator(), false)
-        .min(Comparator.comparing(i -> i.getAmount()))
-        .orElse(new Bid());
-
-    List<Project> winningProjectList = projectListBeforeBidDeadline
-        .stream()
-        .filter(project -> bidWithMinimumAmount.getProject().getId().equals(project.getId()))
-        .collect(Collectors.toList());
-
-    return winningProjectList;
-
+    List<Bid> winningBid = BidRepository.getWinningBid();
+    return  winningBid;
   }
 
   @Override
-  public List<Project> getWinningProjectLowestAmountAndBuyerId(Long buyerId) throws Exception {
+  public List<Bid> getWinningProjectLowestAmountAndBuyerId(Long buyerId) throws Exception {
 
-    List<Project> projectListBeforeBidDeadline = projectService.findAllProjectBeforeBidEndTime();
-
-    Iterator<Bid> sourceIterator = BidRepository.findAll().iterator();
-    Iterable<Bid> iterable = () -> sourceIterator;
-
-    Bid bidWithMinimumAmount = StreamSupport
-        .stream(iterable.spliterator(), false)
-        .min(Comparator.comparing(i -> i.getAmount()))
-        .orElse(new Bid());
-
-    return projectListBeforeBidDeadline
-        .stream()
-        .filter(project -> bidWithMinimumAmount.getProject().getId().equals(project.getId())
-            && bidWithMinimumAmount.getBuyer().getId().equals(buyerId))
-        .collect(Collectors.toList());
+    List<Bid> winningBid = BidRepository.getWinningBidForBuyerId(buyerId);
+    return  winningBid;
   }
 
   @Override

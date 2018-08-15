@@ -10,6 +10,7 @@ import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.models.User;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,7 @@ public class ProjectController {
       }
 
       project.setSeller(seller);
+      project.setProjectPostedDate(new Date());
       Project newProject = projectService.addNewProject(project);
       return new ResponseEntity(newProject, HttpStatus.OK);
     } catch (Exception e) {
@@ -66,7 +68,7 @@ public class ProjectController {
   @RequestMapping(value = "/all/beforebidendtime", method = RequestMethod.GET)
   public ResponseEntity<List<Project>> getAllProjectsBeforeBiddingDeadline() {
     try {
-      List<Project> projectBeforeBiddingEnds = projectService.findAllProjectBeforeBidEndTime();
+      List<Project> projectBeforeBiddingEnds = projectService.findAllProjectsPostedNow();
       return new ResponseEntity(projectBeforeBiddingEnds,HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

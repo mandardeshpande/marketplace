@@ -14,8 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BidRepository extends CrudRepository<Bid,Long>{
 
-  @Query(value = "SELECT Bid.project_id,min(Bid.amount) from Bid,Project where Project.Id = Bid.project_id and Project.bidding_end_time >= now()  group by Bid.project_id", nativeQuery = true)
+  @Query(value = "SELECT * FROM BID WHERE AMOUNT = (select min(amount) from bid, project where project.id=bid.project_id and project.bidding_end_time >= now())", nativeQuery = true)
   List<Bid> getWinningBid();
+
+  @Query(value = "SELECT * FROM BID WHERE buyer_user_id AMOUNT = (select min(amount) from bid, project where project.id=bid.project_id and project.bidding_end_time >= now()) buyer_user_id=?1", nativeQuery = true)
+  List<Bid> getWinningBidForBuyerId(Long buyerUserId);
 
   List<Bid> findBidsByProject_Seller_Id(Long sellerId);
 

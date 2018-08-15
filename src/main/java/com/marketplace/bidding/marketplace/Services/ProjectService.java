@@ -17,4 +17,6 @@ public interface ProjectService {
   List<Project> findBySeller(Seller sellerId) throws Exception;
 
   List<Project> findAllProjectBeforeBidEndTime() throws Exception;
+
+  List<Project> findAllProjectsPostedNow() throws Exception;
 }
