@@ -26,7 +26,7 @@ public class Bid {
 
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   @NotNull
   @Temporal(TemporalType.TIMESTAMP)

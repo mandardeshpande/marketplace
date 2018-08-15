@@ -2,6 +2,7 @@ package com.marketplace.bidding.marketplace.Services.Impl;
 
 import com.marketplace.bidding.marketplace.Services.SellerService;
 import com.marketplace.bidding.marketplace.Services.UserService;
+import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.models.User;
 import com.marketplace.bidding.marketplace.repository.SellerRepository;
@@ -50,6 +51,11 @@ public class SellerServiceImpl implements SellerService {
     List<Seller> sellerList = new ArrayList<>();
     sellerRepository.findAll().forEach(e -> sellerList.add(e));
     return  sellerList;
+  }
+
+  @Override
+  public Seller findBuyerByEmailAndAndPassword(String email, String password){
+    return sellerRepository.findSellerByEmailAndPassword(email, password);
   }
 
 }

@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SellerRepository extends CrudRepository<Seller, Long> {
 
+  Seller findSellerByEmailAndPassword(String email, String password);
 }

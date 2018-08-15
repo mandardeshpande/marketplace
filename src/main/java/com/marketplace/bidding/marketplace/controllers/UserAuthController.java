@@ -2,35 +2,26 @@ package com.marketplace.bidding.marketplace.controllers;
 
 import com.marketplace.bidding.marketplace.Services.Impl.BuyerServiceImpl;
 import com.marketplace.bidding.marketplace.Services.Impl.SellerServiceImpl;
-import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
 
+import com.marketplace.bidding.marketplace.models.AuthUserResponse;
 import com.marketplace.bidding.marketplace.models.Buyer;
-import com.marketplace.bidding.marketplace.models.User;
+import com.marketplace.bidding.marketplace.models.Seller;
 import com.marketplace.bidding.marketplace.models.UserAuthRequest;
-import java.util.Date;
-import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-
 @Controller
 @RequestMapping(path = "/user")
 public class UserAuthController {
-
-
-  @Autowired
-  private UserServiceImpl userService;
 
   @Autowired
   private BuyerServiceImpl buyerService;
@@ -39,24 +30,43 @@ public class UserAuthController {
   private SellerServiceImpl sellerService;
 
 
-
   @RequestMapping(path = "/auth/buyer", method = RequestMethod.POST)
-  public ResponseEntity<?> loginUser(@RequestBody UserAuthRequest authRequest) {
+  public ResponseEntity<AuthUserResponse> loginBuyerUser(@RequestBody UserAuthRequest authRequest) {
     try {
 
-      Buyer buyerUser = null;
-      if(authRequest.getUserType().equals("buyer")){
-         buyerUser = buyerService.findBuyerByEmailAndAndPassword(authRequest.getEmail(), authRequest.getPassword());
+      AuthUserResponse authUserResponse = new AuthUserResponse();
+      Buyer buyerUser = buyerService.findBuyerByEmailAndAndPassword(authRequest.getEmail(), authRequest.getPassword());
+      authUserResponse.setFirstName(buyerUser.getFirstName());
+      authUserResponse.setUserId(buyerUser.getId());
+
+      if (buyerUser == null) {
+        return new ResponseEntity<AuthUserResponse>(authUserResponse, HttpStatus.NOT_FOUND);
       }
 
-      if(buyerUser == null){
-        return new ResponseEntity<String>("user not found ", HttpStatus.NOT_FOUND);
-      }
-
-      return new ResponseEntity<Buyer>(buyerUser, HttpStatus.OK);
+      return new ResponseEntity<AuthUserResponse>(authUserResponse, HttpStatus.OK);
     } catch (Exception e) {
       e.printStackTrace();
-      return new ResponseEntity<Buyer>( HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<AuthUserResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @RequestMapping(path = "/auth/seller", method = RequestMethod.POST)
+  public ResponseEntity<AuthUserResponse> loginSellerUser(@RequestBody UserAuthRequest authRequest) {
+
+    try {
+      AuthUserResponse authUserResponse = new AuthUserResponse();
+        Seller sellerUser = sellerService.findBuyerByEmailAndAndPassword(authRequest.getEmail(), authRequest.getPassword());
+
+      authUserResponse.setFirstName(sellerUser.getFirstName());
+      authUserResponse.setUserId(sellerUser.getId());
+      if (sellerUser == null) {
+        return new ResponseEntity<AuthUserResponse>(authUserResponse, HttpStatus.NOT_FOUND);
+      }
+
+      return new ResponseEntity<AuthUserResponse>(authUserResponse, HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<AuthUserResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

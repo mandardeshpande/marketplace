@@ -10,12 +10,11 @@ import com.marketplace.bidding.marketplace.models.BidRequest;
 import com.marketplace.bidding.marketplace.models.BidResponse;
 import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Project;
-import com.marketplace.bidding.marketplace.models.User;
+import com.marketplace.bidding.marketplace.models.ProjectResponse;
 import java.util.Date;
 import java.util.List;
 
 import java.util.stream.Collectors;
-import javax.xml.ws.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,17 +98,53 @@ public class BidController {
   @RequestMapping(value = "/winning", method = RequestMethod.GET)
   public ResponseEntity<?> getWinning() {
     try {
-      List<Project> p = bidService.getWinningBid();
+      List<Project> p = bidService.getWinningProjectByLowBidAmount();
       return new ResponseEntity<List<Project>>(p, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<Bid>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @RequestMapping(value = "/winning/{buyerId}", method = RequestMethod.GET)
+  public ResponseEntity<?> getWinningBuyerDetails(@PathVariable("buyerId") Long buyerId) {
+    try {
+      List<ProjectResponse> projectResponseList = bidService.getWinningProjectLowestAmountAndBuyerId(buyerId).stream().map(eachProject->{
+        ProjectResponse projectResponse = new ProjectResponse();
+        projectResponse.setProjectTitle(eachProject.getTitle());
+        projectResponse.setDescription(eachProject.getDescription());
+        projectResponse.setProjectDeliveryDate(eachProject.getProjectDeliveryDate());
+        projectResponse.setProjectSellerFirstName(eachProject.getSeller().getFirstName());
+
+        return projectResponse;
+      }).collect(Collectors.toList());;
+      return new ResponseEntity<List<ProjectResponse>>(projectResponseList, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<List<ProjectResponse>>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @RequestMapping(value = "/project/{sellerId}", method = RequestMethod.GET)
-  public ResponseEntity<?> getAllBidsForProjectId( @PathVariable("sellerId") Long projectSellerId) {
+  public ResponseEntity<?> getAllBidsForSellerId( @PathVariable("sellerId") Long projectSellerId) {
     try {
       List<BidResponse> p = bidService.getAllBidsForProjectId(projectSellerId).stream().map(eachBid->{
+        BidResponse response = new BidResponse();
+        response.setBidAmount(eachBid.getAmount());
+        response.setBidderFirstName(eachBid.getBuyer().getFirstName());
+        response.setBidTime(eachBid.getBidTime());
+        response.setProjectTitle(eachBid.getProject().getTitle());
+        response.setProjectDescription(eachBid.getProject().getDescription());
+        return response;
+      }).collect(Collectors.toList());
+      return new ResponseEntity<List<BidResponse>>(p, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<List<BidResponse>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @RequestMapping(value = "/project/buyer/{buyerId}", method = RequestMethod.GET)
+  public ResponseEntity<?> getAllBidsByBuyerId( @PathVariable("buyerId") Long projectBuyerId) {
+    try {
+      List<BidResponse> p = bidService.getAllBidsByBuyerId(projectBuyerId).stream().map(eachBid->{
         BidResponse response = new BidResponse();
         response.setBidAmount(eachBid.getAmount());
         response.setBidderFirstName(eachBid.getBuyer().getFirstName());
@@ -121,7 +156,7 @@ public class BidController {
       }).collect(Collectors.toList());
       return new ResponseEntity<List<BidResponse>>(p, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<BidResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<List<BidResponse>>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

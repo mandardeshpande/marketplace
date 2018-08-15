@@ -55,7 +55,7 @@ public class BuyerServiceImpl implements BuyerService {
 
   @Override
   public Buyer findBuyerByEmailAndAndPassword(String email, String password){
-    return buyerRepository.findBuyerByEmailAndAndPassword(email, password);
+    return buyerRepository.findBuyerByEmailAndPassword(email, password);
   }
 
 

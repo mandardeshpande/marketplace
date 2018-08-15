@@ -16,5 +16,7 @@ public interface SellerService {
 
     List<Seller> getAllSeller() throws Exception;
 
+    Seller findBuyerByEmailAndAndPassword(String email, String password) throws Exception;
+
   }
 
