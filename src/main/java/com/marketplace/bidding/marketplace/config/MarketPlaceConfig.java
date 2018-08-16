@@ -17,6 +17,7 @@ public class MarketPlaceConfig {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.addAllowedOrigin("http://localhost:3000");
+    config.addAllowedOrigin("https://marketplace-selfemployed.herokuapp.com");
     config.addAllowedOrigin("*");
     config.addAllowedHeader("*");
     config.addAllowedMethod("*");
