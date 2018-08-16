@@ -108,7 +108,7 @@ public class BidController {
   @RequestMapping(value = "/winning/{buyerId}", method = RequestMethod.GET)
   public ResponseEntity<?> getWinningBuyerDetails(@PathVariable("buyerId") Long buyerId) {
     try {
-      List<BidResponse> p = bidService.getAllBidsForProjectId(buyerId).stream().map(eachBid->{
+      List<BidResponse> p = bidService.getWinningProjectLowestAmountAndBuyerId(buyerId).stream().map(eachBid->{
         BidResponse response = new BidResponse();
         response.setBidAmount(eachBid.getAmount());
         response.setBidderFirstName(eachBid.getBuyer().getFirstName());

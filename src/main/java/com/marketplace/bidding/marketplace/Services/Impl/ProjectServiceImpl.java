@@ -58,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
   @Override
   public List<Project> findAllProjectBeforeBidEndTime(){
     Date currentDate = new Date(System.currentTimeMillis());
-    Iterator<Project> sourceIterator = projectRepository.findAll().iterator();
+    Iterator<Project> sourceIterator = projectRepository.findProjectsBeforeBidEndTime().iterator();
     Iterable<Project> iterable = () -> sourceIterator;
 
     return StreamSupport.stream(iterable.spliterator(),false)

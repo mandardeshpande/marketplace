@@ -68,7 +68,7 @@ public class ProjectController {
   @RequestMapping(value = "/all/beforebidendtime", method = RequestMethod.GET)
   public ResponseEntity<List<Project>> getAllProjectsBeforeBiddingDeadline() {
     try {
-      List<Project> projectBeforeBiddingEnds = projectService.findAllProjectsPostedNow();
+      List<Project> projectBeforeBiddingEnds = projectService.findAllProjectBeforeBidEndTime();
       return new ResponseEntity(projectBeforeBiddingEnds,HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
