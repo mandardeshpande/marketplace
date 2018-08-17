@@ -1,15 +1,10 @@
 package com.marketplace.bidding.marketplace.controllers;
 
 
-import com.marketplace.bidding.marketplace.Services.BidService;
 import com.marketplace.bidding.marketplace.Services.Impl.ProjectServiceImpl;
 import com.marketplace.bidding.marketplace.Services.Impl.SellerServiceImpl;
-import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
-import com.marketplace.bidding.marketplace.models.Bid;
 import com.marketplace.bidding.marketplace.models.Project;
 import com.marketplace.bidding.marketplace.models.Seller;
-import com.marketplace.bidding.marketplace.models.User;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +23,6 @@ public class ProjectController {
 
   @Autowired
   ProjectServiceImpl projectService;
-
-  @Autowired
-  UserServiceImpl userService;
 
   @Autowired
   SellerServiceImpl sellerService;

@@ -1,7 +1,6 @@
 package com.marketplace.bidding.marketplace.Services;
 
 import com.marketplace.bidding.marketplace.models.Seller;
-import com.marketplace.bidding.marketplace.models.User;
 import java.util.List;
 
 public interface SellerService {

@@ -25,8 +25,6 @@ public class BidServiceImpl implements BidService {
   @Autowired
   ProjectServiceImpl projectService;
 
-  @Autowired
-  BidInformationServiceImpl bidInformationService;
 
 
   @Override

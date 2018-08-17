@@ -18,7 +18,7 @@ public interface ProjectRepository extends CrudRepository<Project,Long> {
   @Query(value = "SELECT * FROM Project ORDER BY project_posted_date DESC ", nativeQuery = true)
   List<Project> findProjectsByProjectPostedDate();
 
-  @Query(value = "SELECT * FROM Project where bidding_end_time >= now() ORDER BY bidding_end_time DESC ", nativeQuery = true)
+  @Query(value = "SELECT * FROM Project where bidding_end_time > now()  ORDER BY bidding_end_time DESC ", nativeQuery = true)
   List<Project> findProjectsBeforeBidEndTime();
 
 }

@@ -4,13 +4,11 @@ package com.marketplace.bidding.marketplace.controllers;
 import com.marketplace.bidding.marketplace.Services.BidService;
 import com.marketplace.bidding.marketplace.Services.Impl.BuyerServiceImpl;
 import com.marketplace.bidding.marketplace.Services.Impl.ProjectServiceImpl;
-import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
 import com.marketplace.bidding.marketplace.models.Bid;
 import com.marketplace.bidding.marketplace.models.BidRequest;
 import com.marketplace.bidding.marketplace.models.BidResponse;
 import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Project;
-import com.marketplace.bidding.marketplace.models.ProjectResponse;
 import java.util.Date;
 import java.util.List;
 
@@ -31,9 +29,6 @@ public class BidController {
 
   @Autowired
   BidService bidService;
-
-  @Autowired
-  UserServiceImpl userService;
 
   @Autowired
   BuyerServiceImpl buyerService;

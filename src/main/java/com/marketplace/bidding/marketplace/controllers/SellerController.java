@@ -1,10 +1,7 @@
 package com.marketplace.bidding.marketplace.controllers;
 
 import com.marketplace.bidding.marketplace.Services.Impl.SellerServiceImpl;
-import com.marketplace.bidding.marketplace.Services.Impl.UserServiceImpl;
-import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Seller;
-import com.marketplace.bidding.marketplace.models.User;
 import com.marketplace.bidding.marketplace.models.UserRegistrationRequest;
 import java.util.Date;
 import java.util.List;

@@ -1,12 +1,8 @@
 package com.marketplace.bidding.marketplace.Services.Impl;
 
 import com.marketplace.bidding.marketplace.Services.SellerService;
-import com.marketplace.bidding.marketplace.Services.UserService;
-import com.marketplace.bidding.marketplace.models.Buyer;
 import com.marketplace.bidding.marketplace.models.Seller;
-import com.marketplace.bidding.marketplace.models.User;
 import com.marketplace.bidding.marketplace.repository.SellerRepository;
-import com.marketplace.bidding.marketplace.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
